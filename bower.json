@@ -1,0 +1,13 @@
+{
+	"name": "jq-popover",
+	"main": "jqtags.popover.js",
+	"authors": ["Lalit Tanwar <lalit.tanwar07@gmail.com>"],
+	"description": "fancy bootstrap popover",
+	"keywords": ["pitana", "jquery"],
+	"dependencies": {
+		"webmodules-jqtag": ">=0.0.0",
+		"webmodules-bootstrap": "3.*"
+	},
+	"license": "MIT",
+	"ignore": ["**/.*", "node_modules", "bower_components"]
+}
