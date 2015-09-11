@@ -3,5 +3,9 @@
   "jqtags/jq-popover": {
     "js": ["jqtags.popover.js"],
     "on": ["webmodules/jqtag", "webmodules/bootstrap"]
+  },
+  "jqtags/jq-popover/test": {
+    "js": ["test/jqtags.popover.test.js"],
+    "on": ["jqtags/jq-popover", "spamjs/view"]
   }
 }
