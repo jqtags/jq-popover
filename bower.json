@@ -5,7 +5,7 @@
 	"description": "fancy bootstrap popover",
 	"keywords": ["pitana", "jquery"],
 	"dependencies": {
-		"webmodules-jqtag": ">=0.0.0",
+		"webmodules-jqtag": ">=0.0.6",
 		"webmodules-bootstrap": "3.*"
 	},
 	"license": "MIT",
