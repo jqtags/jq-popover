@@ -1,0 +1,7 @@
+{
+  "name": "jqtags/jq-popover",
+  "jqtags/jq-popover": {
+    "js": ["jqtags.popover.js"],
+    "on": ["webmodules/jqtag", "webmodules/bootstrap"]
+  }
+}
