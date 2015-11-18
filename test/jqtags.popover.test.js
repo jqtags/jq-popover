@@ -9,8 +9,10 @@ define({
 		       "jqtags.popover.test.html"
 		],
 		events : {
-			"jq.popover.opened jq-popover" : "popoverOpened",
-      "jq.popover.closed jq-popover" : "popoverClosed"
+			"jq.popover.opened jq-popover#test1" : "popoverOpened",
+      "jq.popover.closed jq-popover#test1" : "popoverClosed",
+      "jq.popover.opened jq-popover#test2" : "popoverOpened2",
+      "jq.popover.closed jq-popover#test2" : "popoverClosed2"
 		},
 		_init_ : function(){
 			_importStyle_("jqtags/jq-select");
@@ -29,6 +31,12 @@ define({
       this.model().popoverStatus = "CLOSED";
 			console.log("popoverClosed",a,b,c);
 		},
+    popoverOpened2 : function(e){
+      this.$$.find("#remote_content").loadTemplate(this.path("content.html"),this.path("content.json"));
+    },
+    popoverClosed2 : function(){
+
+    },
 		_remove_ : function(){
 			
 		}

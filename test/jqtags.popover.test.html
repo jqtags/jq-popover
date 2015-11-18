@@ -2,7 +2,7 @@ popoverStatus :
 {model.popoverStatus}
 <br/>
 
-<jq-popover class="css-inline-toolbar-item css-fl-l">
+<jq-popover id="test1" class="css-inline-toolbar-item css-fl-l">
     <jq-popover-title class="css-capsule-button"  data-placement="bottom">Popover Title
     </jq-popover-title>
     <jq-popover-content>
@@ -11,5 +11,20 @@ popoverStatus :
 </jq-popover>
 <br/>
 
+Need some break?
 <br/>
 
+<div style="height: 100px"></div>
+Need some break?
+<br/>
+
+<jq-popover id="test2" class="css-inline-toolbar-item css-fl-l" autoposition>
+    <jq-popover-title class="css-capsule-button" >Popover Title with promise load
+    </jq-popover-title>
+    <jq-popover-content id="remote_content">
+        Loading...
+    </jq-popover-content>
+</jq-popover>
+
+
+<br/>
