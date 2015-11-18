@@ -8,8 +8,12 @@ _tag_("jqtags.popover",function(){
     jQuery("jq-popover jq-popover-title[aria-describedby],jq-popover [jq-popover-title][aria-describedby]").each(function (i,elem) {
       //the 'is' for buttons that trigger popups
       //the 'has' for icons within a button that triggers a popup
-      if (!jQuery(elem).is(e.target) && jQuery(elem).has(e.target).length === 0 && jQuery('.popover').has(e.target).length === 0) {
-          jQuery(elem).click();
+//      if (!jQuery(elem).is(e.target) && jQuery(elem).has(e.target).length === 0 && jQuery('.popover').has(e.target).length === 0) {
+//          jQuery(elem).popover("hide");
+//      }
+      // hide any open popovers when the anywhere else in the body is clicked
+      if (!jQuery(this).is(e.target) && jQuery(this).has(e.target).length === 0 && jQuery('.popover').has(e.target).length === 0) {
+        jQuery(this).popover('hide');
       }
     });
   });
@@ -47,6 +51,10 @@ _tag_("jqtags.popover",function(){
         }
       }).on("hide.bs.popover", function(){
         var $con = self.$.querySelector("jq-popover-content");
+        var tooltips = $('.popover').not('.in');
+        if (tooltips) {
+          tooltips.remove();
+        }
         if($con){
           $con.setAttribute("hidden","hidden");
           jQuery(self.$).append($con);
