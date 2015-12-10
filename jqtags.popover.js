@@ -21,7 +21,12 @@ _tag_("jqtags.popover",function(){
   return {
     tagName: "jq-popover",
     events: {
-      "shown.bs.popover" : "onPopoverShow"
+      "shown.bs.popover" : "onPopoverShow",
+      //"hover" : "initPopover",
+      "click" : "showPopover"
+    },
+    showPopover : function(){
+      jQuery(this.$).find("jq-popover-title,[jq-popover-title]").popover('show');
     },
     accessors : {
       value: {
@@ -41,13 +46,25 @@ _tag_("jqtags.popover",function(){
       if($con){
         $con.setAttribute("hidden","hidden");
       }
+      this.initPopover();
+      if(this.$.autoposition){
+       jQuery(self.$.querySelector("jq-popover-content")).bind("DOMSubtreeModified",function(){
+          self.resetPositions();
+        });
+      }
+    },
+    initPopover : function(){
+      var self = this;
       var $title = jQuery(this.$).find("jq-popover-title,[jq-popover-title]");
       this.$popover = $title.popover({
         html : true,
+        trigger: $title.data("trigger") || 'manual',
         content : function(){
           var $con = self.$.querySelector("jq-popover-content");
-          $con.removeAttribute("hidden");
-          return $con;//self.$.querySelector("jq-popover-content").innerHTML;
+          if($con){
+            $con.removeAttribute("hidden");
+            return $con;//self.$.querySelector("jq-popover-content").innerHTML;
+          }
         }
       }).on("hide.bs.popover", function(){
         var $con = self.$.querySelector("jq-popover-content");
@@ -63,12 +80,6 @@ _tag_("jqtags.popover",function(){
       }).on("shown.bs.popover", function(){
         self.onPopoverShow();
       });
-
-      if(this.$.autoposition){
-       jQuery(self.$.querySelector("jq-popover-content")).bind("DOMSubtreeModified",function(){
-          self.resetPositions();
-        });
-      }
     },
     onPopoverShow : function(){
       return this.trigger("jq.popover.opened");
