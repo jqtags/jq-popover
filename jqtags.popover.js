@@ -23,10 +23,14 @@ _tag_("jqtags.popover",function(){
     events: {
       "shown.bs.popover" : "onPopoverShow",
       //"hover" : "initPopover",
-      "click" : "showPopover"
+      "click jq-popover-title,[jq-popover-title]" : "showPopover"
     },
-    showPopover : function(){
-      jQuery(this.$).find("jq-popover-title,[jq-popover-title]").popover('show');
+    showPopover : function(e,target){
+      if(jQuery(this.$).find("jq-popover-title,[jq-popover-title]").attr("aria-describedby")){
+        if(this.trigger_ename=="manual"){
+          jQuery(this.$).find("jq-popover-title,[jq-popover-title]").popover('hide');
+        }
+      } else jQuery(this.$).find("jq-popover-title,[jq-popover-title]").popover('show');
     },
     accessors : {
       value: {
@@ -56,9 +60,10 @@ _tag_("jqtags.popover",function(){
     initPopover : function(){
       var self = this;
       var $title = jQuery(this.$).find("jq-popover-title,[jq-popover-title]");
+      this.trigger_ename = $title.data("trigger") || 'manual';
       this.$popover = $title.popover({
         html : true,
-        trigger: $title.data("trigger") || 'manual',
+        trigger:  this.trigger_ename,
         content : function(){
           var $con = self.$.querySelector("jq-popover-content");
           if($con){
