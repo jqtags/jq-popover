@@ -23,11 +23,12 @@ _tag_("jqtags.popover", function() {
     events: {
       "shown.bs.popover": "onPopoverShow",
       //"hover" : "initPopover",
-      "click jq-popover-title,[jq-popover-title]": "showPopover"
+      "click jq-popover-title,[jq-popover-title]": "showPopover",
+      "click jq-popover-content": "hidePopoverOnMenuClick"
     },
     showPopover: function(e, target) {
       if (jQuery(this.$).find("jq-popover-title,[jq-popover-title]").attr("aria-describedby")) {
-        if (this.trigger_ename == "manual") {
+        if (this.trigger_ename == "manual" || this.trigger_ename == "customFocus") {
           jQuery(this.$).find("jq-popover-title,[jq-popover-title]").popover('hide');
         }
       } else jQuery(this.$).find("jq-popover-title,[jq-popover-title]").popover('show');
@@ -101,6 +102,11 @@ _tag_("jqtags.popover", function() {
     },
     detachedCallback: function() {
       return jQuery(this.$).find("jq-popover-title,[jq-popover-title]").popover('destroy');
+    },
+    hidePopoverOnMenuClick: function() {
+      if(this.trigger_ename == 'customFocus') {
+        this.hidePopover();
+      }
     },
     hidePopover: function() {
       var $title = this.$.querySelector("jq-popover-title") || this.$.querySelector("[jq-popover-title]");
