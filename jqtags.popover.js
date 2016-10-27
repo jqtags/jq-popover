@@ -168,8 +168,9 @@ _tag_("jqtags.popover", function() {
         $.fn.popover.Constructor.prototype.setContent = function() {
           popover_content_tmp.call(this);
           // Following is a copy from tooltip.js. Basically we are doing the alignment again
-          //console.error("holaa  1")
-          this.$element.closest("jq-popover ")[0].setTagOption("popoverInstance", this);
+           if( this.$element.closest("jq-popover").length){
+               this.$element.closest("jq-popover")[0].setTagOption("popoverInstance", this);
+           }
         }
       }(window.jQuery);
     }
