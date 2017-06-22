@@ -22,7 +22,6 @@ _tag_("jqtags.popover", function() {
     tagName: "jq-popover",
     events: {
       "shown.bs.popover": "onPopoverShow",
-      //"hover" : "initPopover",
       "click jq-popover-title,[jq-popover-title]": "showPopover",
       "click jq-popover-content": "hidePopoverOnMenuClick"
     },
@@ -62,12 +61,14 @@ _tag_("jqtags.popover", function() {
       var self = this;
       var $title = jQuery(this.$).find("jq-popover-title,[jq-popover-title]");
       this.trigger_ename = $title.data("trigger") || 'manual';
+      this.$content = undefined;
       this.$popover = $title.popover({
         html: true,
         trigger: this.trigger_ename,
         content: function() {
           var $con = self.$.querySelector("jq-popover-content");
           if ($con) {
+            self.$content = self.$content || $con;
             $con.removeAttribute("hidden");
             return $con; //self.$.querySelector("jq-popover-content").innerHTML;
           }
@@ -78,8 +79,10 @@ _tag_("jqtags.popover", function() {
         if (tooltips) {
           tooltips.remove();
         }
+
+        $con = $con || self.$content || undefined;
         if ($con) {
-          jQuery(self.$).find('.arrow').css('display', 'none');
+          jQuery(self.$).find('.arrow').hide();
           $con.setAttribute("hidden", "hidden");
           jQuery(self.$).append($con);
           self.trigger("jq.popover.closed");
@@ -92,19 +95,17 @@ _tag_("jqtags.popover", function() {
     },
     onPopoverShow: function() {
       var self = this;
-      
       if (jQuery(self.$).find("jq-popover-content").html() == '')
-        jQuery(self.$).find('.arrow').css('display', 'none');
+        jQuery(self.$).find('.arrow').hide();
       else
-        jQuery(self.$).find('.arrow').css('display', 'block');
-
+        jQuery(self.$).find('.arrow').show();
       return this.trigger("jq.popover.opened");
     },
     detachedCallback: function() {
       return jQuery(this.$).find("jq-popover-title,[jq-popover-title]").popover('destroy');
     },
     hidePopoverOnMenuClick: function() {
-      if(this.trigger_ename == 'customFocus') {
+      if (this.trigger_ename == 'customFocus') {
         this.hidePopover();
       }
     },
@@ -115,51 +116,51 @@ _tag_("jqtags.popover", function() {
     setTagOption: function(key, value) {
       this[key] = value;
     },
-    resetPositions: function(self) {
+    resetPositions: function() {
       var self = this.popoverInstance;
       if (self) {
         var $tip = self.tip();
-        jQuery(this.$).removeClass('fade in top bottom left right')
+        jQuery(this.$).removeClass('fade in top bottom left right');
 
         var placement, pos, actualWidth, actualHeight, tp;
 
         placement = typeof self.options.placement == 'function' ?
           self.options.placement.call(this, $tip[0], self.$element[0]) :
-          self.options.placement
+          self.options.placement;
 
-        pos = self.getPosition()
+        pos = self.getPosition();
 
-        actualWidth = $tip[0].offsetWidth
-        actualHeight = $tip[0].offsetHeight
+        actualWidth = $tip[0].offsetWidth;
+        actualHeight = $tip[0].offsetHeight;
 
         switch (placement) {
           case 'bottom':
             tp = {
               top: pos.top + pos.height,
               left: pos.left + pos.width / 2 - actualWidth / 2
-            }
-            break
+            };
+            break;
           case 'top':
             tp = {
               top: pos.top - actualHeight,
               left: pos.left + pos.width / 2 - actualWidth / 2
-            }
-            break
+            };
+            break;
           case 'left':
             tp = {
               top: pos.top + pos.height / 2 - actualHeight / 2,
               left: pos.left - actualWidth
-            }
-            break
+            };
+            break;
           case 'right':
             tp = {
               top: pos.top + pos.height / 2 - actualHeight / 2,
               left: pos.left + pos.width
-            }
-            break
+            };
+            break;
         }
-        self.applyPlacement(tp, placement)
-          //    self.$element.trigger('shown')
+        self.applyPlacement(tp, placement);
+        //    self.$element.trigger('shown')
       }
     },
     _ready_: function() {
@@ -168,10 +169,10 @@ _tag_("jqtags.popover", function() {
         $.fn.popover.Constructor.prototype.setContent = function() {
           popover_content_tmp.call(this);
           // Following is a copy from tooltip.js. Basically we are doing the alignment again
-           if( this.$element.closest("jq-popover").length){
-               this.$element.closest("jq-popover")[0].setTagOption("popoverInstance", this);
-           }
-        }
+          if (this.$element.closest("jq-popover").length) {
+            this.$element.closest("jq-popover")[0].setTagOption("popoverInstance", this);
+          }
+        };
       }(window.jQuery);
     }
   };
